@@ -11,11 +11,15 @@ public class GameSystems : GameAction
 {
     public static Action ActivateBoost = delegate { };
     public static Action DeActivateBoost = delegate { };
+    public static Action EnterBoss = delegate { };
+    public static Action ExitBoss = delegate { };
 
-    [Header("Refs")]
+    [Header("PlayerRefs")]
     [SerializeField] private Slider SizeSilder;
     [SerializeField] private Slider healthSlider;
     [SerializeField] private Image PowerUpDisplay;
+
+    [Header("UIRefs")]
     [SerializeField] private GameObject StartScreen;
     [SerializeField] private GameObject PauseScreen;
     [SerializeField] private GameObject EndScreen;
@@ -29,6 +33,11 @@ public class GameSystems : GameAction
     [SerializeField] private TextMeshProUGUI HighPScore;
     [SerializeField] private AudioSource As;
 
+    [Header("BossRefs")]
+    [SerializeField] private GameObject BossUI;
+    [SerializeField] private TextMeshProUGUI BossName;
+    [SerializeField] private Slider BossHeathBar;
+
     [SerializeField] private Sprite[] PowerSprites;
 
     public bool InPlay = false;
@@ -37,9 +46,13 @@ public class GameSystems : GameAction
     public float SizeNumb;
 
     public bool Paused;
+    public bool BossState;
+
+    public bool TestB;
 
     private PlayerController PC;
     private SeaCritterController Sc;
+    private EnemyHeath BossenemyHeath;
 
     private void OnEnable()
     {
@@ -49,6 +62,8 @@ public class GameSystems : GameAction
         Projectile.IncreasePointsHit += SmallIncreaseScore;
         IncreaseHeathGA.Heal += IncreaseHeath;
         PC.Player.PauseGame.performed += PauseGame;
+        BossAreana.Startboss += TriggerBoss;
+        BossAreana.StopBoss += FinishBoss;
     }
     private void OnDisable()
     {
@@ -58,6 +73,8 @@ public class GameSystems : GameAction
         Projectile.IncreasePointsHit -= SmallIncreaseScore;
         IncreaseHeathGA.Heal -= IncreaseHeath;
         PC.Player.PauseGame.performed -= PauseGame;
+        BossAreana.Startboss -= TriggerBoss;
+        BossAreana.StopBoss -= FinishBoss;
     }
     private void Awake()
     {
@@ -74,6 +91,24 @@ public class GameSystems : GameAction
 
     private void Update()
     {
+        if(TestB)
+        {
+            if (!BossState)
+            {
+                TriggerBoss();
+            }
+            else
+            {
+                FinishBoss();
+            }
+            TestB = false;
+        }
+
+        if(BossState)
+        {
+            BossHeathBar.value = BossenemyHeath.Heath;
+        }
+
         if (SizeSilder.value >= 10)
         {
             ActivateBoost();
@@ -145,6 +180,23 @@ public class GameSystems : GameAction
         }
     }
 
+    private void TriggerBoss()
+    {
+        BossState = true;
+        BossName.text = FindObjectOfType<AiBoss>().BossName;
+        BossenemyHeath = FindObjectOfType<AiBoss>().gameObject.GetComponent<EnemyHeath>();
+        BossHeathBar.maxValue = BossenemyHeath.MaxHeath;
+        BossHeathBar.value = BossHeathBar.maxValue;
+        BossUI.SetActive(true);
+        EnterBoss();
+    }
+
+    private void FinishBoss()
+    {
+        BossState = false;
+        BossUI.SetActive(false);
+        ExitBoss();
+    }
     private void Die()
     {
         As.Play();
@@ -200,6 +252,11 @@ public class GameSystems : GameAction
         {
             Paused = false;
             PauseScreen.SetActive(false);
+        }
+        FinishBoss();
+        if (FindObjectOfType<BossAreana>())
+        {
+            Destroy(FindObjectOfType<BossAreana>().gameObject);
         }
         InPlay = true;
         SeaSpawner SS = FindObjectOfType<SeaSpawner>();

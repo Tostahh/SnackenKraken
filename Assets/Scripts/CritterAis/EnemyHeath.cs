@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class EnemyHeath : MonoBehaviour
 {
-    [SerializeField] private int MaxHeath;
+    [SerializeField] public int MaxHeath;
 
     [SerializeField] private GameObject DeathPrefab;
 
-    private int Heath;
+    public int Heath;
     private Color sc;
     private void Awake()
     {

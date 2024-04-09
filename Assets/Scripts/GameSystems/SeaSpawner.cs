@@ -40,6 +40,17 @@ public class SeaSpawner : MonoBehaviour
         Player = FindObjectOfType<SeaCritterController>().gameObject;
         timeSinceLastSpawnf = (1f / fps);
     }
+    private void OnEnable()
+    {
+        GameSystems.EnterBoss += EnterBoss;
+        GameSystems.ExitBoss += ExitBoss;
+    }
+    private void OnDisable()
+    {
+        GameSystems.EnterBoss -= EnterBoss;
+        GameSystems.ExitBoss -= ExitBoss;
+    }
+
     private void OnGUI()
     {
         TimerDisplay.text = TimeSinceStart.ToString("F2");
@@ -88,23 +99,26 @@ public class SeaSpawner : MonoBehaviour
             }
         }
 
-        timeSinceLastSpawnf += Time.deltaTime;
-        timeSinceLastSpawnS += Time.deltaTime;
-        timeSinceLastCheck += Time.deltaTime;
-        if (timeSinceLastCheck >= (1f / cps))
+        if (!Us.BossState)
         {
-            Check();
-            timeSinceLastCheck = 0;
-        }
-        if (timeSinceLastSpawnS >= (1f / eps))
-        {
-            SpawnShark();
-            timeSinceLastSpawnS = 0;
-        }
-        if (timeSinceLastSpawnf >= (1f / fps))
-        {
-            SpawnFishy();
-            timeSinceLastSpawnf = 0;
+            timeSinceLastCheck += Time.deltaTime;
+            timeSinceLastSpawnf += Time.deltaTime;
+            timeSinceLastSpawnS += Time.deltaTime;
+            if (timeSinceLastCheck >= (1f / cps))
+            {
+                Check();
+                timeSinceLastCheck = 0;
+            }
+            if (timeSinceLastSpawnS >= (1f / eps))
+            {
+                SpawnShark();
+                timeSinceLastSpawnS = 0;
+            }
+            if (timeSinceLastSpawnf >= (1f / fps))
+            {
+                SpawnFishy();
+                timeSinceLastSpawnf = 0;
+            }
         }
     }
     private void SpawnShark()
@@ -245,6 +259,25 @@ public class SeaSpawner : MonoBehaviour
             }
         }
     }
+
+    private void EnterBoss()
+    {
+        foreach(Critter c in SeaObjects)
+        {
+            c.gameObject.SetActive(false);
+        }
+    }
+    private void ExitBoss()
+    {
+        foreach (Critter c in SeaObjects)
+        {
+            if (c != null)
+            {
+                c.gameObject.SetActive(true);
+            }
+        }
+    }
+
     public void ResetGame()
     {
         foreach(Critter c in SeaObjects)

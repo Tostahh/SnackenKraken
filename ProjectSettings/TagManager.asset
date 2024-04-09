@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Projectile
   - Friend
+  - CamTarget
   layers:
   - Default
   - TransparentFX

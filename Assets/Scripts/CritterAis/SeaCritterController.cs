@@ -42,6 +42,8 @@ public class SeaCritterController : MonoBehaviour
     public bool SPower;
     public bool KnockedBack;
 
+    
+
     private void Awake()
     {
         PC = new PlayerController();
@@ -75,7 +77,11 @@ public class SeaCritterController : MonoBehaviour
 
     private void Update()
     {
-        if(!Spraying)
+        if (Us.BossState)
+        {
+            transform.rotation = Quaternion.identity;
+        }
+        if (!Spraying)
         {
             CooldownDisplay.fillAmount -= 1 / STimer * Time.deltaTime;
             if(CooldownDisplay.fillAmount <= 0)
@@ -143,13 +149,17 @@ public class SeaCritterController : MonoBehaviour
             rb.drag = 1f;
         }
 
-        if (!LockedRotation)
+        if (!LockedRotation && !Us.BossState)
         {
             if (Direction != Vector3.zero)
             {
                 quaternion toRotation = quaternion.LookRotation(Vector3.forward, Direction);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, RSpeed * Time.deltaTime);
             }
+        }
+        else if(Us.BossState)
+        {
+            transform.rotation = Quaternion.identity;
         }
 
         if (Bboost)
@@ -273,6 +283,7 @@ public class SeaCritterController : MonoBehaviour
     public void ResetPower()
     {
         StopAllCoroutines();
+        Shot = false;
     }
 
     private void ABoost()
