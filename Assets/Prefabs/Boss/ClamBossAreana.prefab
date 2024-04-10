@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1924997726825134200}
   - component: {fileID: 7817452981533557757}
   m_Layer: 7
-  m_Name: BossAreana
+  m_Name: ClamBossAreana
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

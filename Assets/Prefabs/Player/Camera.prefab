@@ -127,9 +127,6 @@ MonoBehaviour:
   - {fileID: 7263488167769085252, guid: b88fb13a8067cd146b158fbcedae8e27, type: 3}
   - {fileID: 7263488167769085252, guid: b88fb13a8067cd146b158fbcedae8e27, type: 3}
   - {fileID: 7263488167769085252, guid: b88fb13a8067cd146b158fbcedae8e27, type: 3}
-  - {fileID: 7263488167769085252, guid: d427c856ac335bc408985f8ce7c0b179, type: 3}
-  - {fileID: 7263488167769085252, guid: d427c856ac335bc408985f8ce7c0b179, type: 3}
-  - {fileID: 7263488167769085252, guid: d427c856ac335bc408985f8ce7c0b179, type: 3}
   eps: 0.09
   cps: 1
   fps: 0.8

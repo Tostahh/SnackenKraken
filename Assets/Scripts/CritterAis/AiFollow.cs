@@ -145,13 +145,19 @@ public class AiFollow : MonoBehaviour
     public void Stun()
     {
         Stuned = true;
-        animator.enabled = false;
+        if (animator)
+        {
+            animator.enabled = false;
+        }
         StartCoroutine(UnStun());
     }
     private IEnumerator UnStun()
     {
         yield return new WaitForSeconds(1);
-        animator.enabled = true;
+        if (animator)
+        {
+            animator.enabled = true;
+        }
         Stuned = false;
     }
 
