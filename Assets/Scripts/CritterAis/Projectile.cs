@@ -13,6 +13,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] private CircleCollider2D cCollider;
     [SerializeField] private float lifetime = 5;
     [SerializeField] private bool Bplayer;
+    [SerializeField] private bool BDplayer;
     [SerializeField] private bool BLife;
     [SerializeField] private bool Power;
 
@@ -56,28 +57,57 @@ public class Projectile : MonoBehaviour
 
         if(other.CompareTag("Player"))
         {
-            SeaCritterController Sc = other.GetComponent<SeaCritterController>();
-            Sc.ResetSpeed();
-            Sc.gameObject.transform.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.blue;
-            DisableSelf();
+            if (!BDplayer)
+            {
+                SeaCritterController Sc = other.GetComponent<SeaCritterController>();
+                Sc.ResetSpeed();
+                Sc.gameObject.transform.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.blue;
+                DisableSelf();
+            }
         }
 
         if (other.CompareTag("Enemy") && Bplayer)
         {
             AiFollow B = other.GetComponent<AiFollow>();
             AiShoot A = other.GetComponent<AiShoot>();
+            AiMinion C = other.GetComponent<AiMinion>();
+            AiMinionB D = other.GetComponent<AiMinionB>();
+            AiBoss Boss = other.GetComponent<AiBoss>();
             EnemyHeath EH = other.GetComponent<EnemyHeath>();
-            IncreasePointsHit();
-            if (B != null)
+            if (!Boss)
             {
-                B.Stun();
+                IncreasePointsHit();
+                if (B != null)
+                {
+                    B.Stun();
+                }
+                if (A != null)
+                {
+                    A.Stun();
+                }
+                if (C != null)
+                {
+                    C.Stun();
+                }
+                if(D != null)
+                {
+                    D.Stun();
+                }
+                EH.Takeheath();
+                DisableSelf();
             }
-            if (A != null)
+            else
             {
-                A.Stun();
+                if(Boss.Protected)
+                {
+                    DisableSelf();
+                }
+                else
+                {
+                    IncreasePointsHit();
+                    EH.Takeheath();
+                }
             }
-            EH.Takeheath();
-            DisableSelf();
         }
     }
     private void DisableSelf()

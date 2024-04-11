@@ -12,5 +12,6 @@ public class DestroyTimer : MonoBehaviour
     private IEnumerator Dday()
     {
         yield return new WaitForSeconds(Dtime);
+        Destroy(gameObject);
     }
 }

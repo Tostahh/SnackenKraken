@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 648001644, guid: 5dadc0bcca4b1e8428b3cf37f1dbd9a0, type: 3}
+  m_Sprite: {fileID: 32494707, guid: 67ac1e658a041ba43a658d2d692b20e5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -95,7 +95,7 @@ Animator:
   m_GameObject: {fileID: 1029854011331898419}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: df1ea86997d4de043bfb6dc963b236de, type: 2}
+  m_Controller: {fileID: 9100000, guid: 445708822d9c3b84994d0283c5c9c4c2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -120,11 +120,11 @@ GameObject:
   - component: {fileID: -4805822338483365710}
   - component: {fileID: 6096914105608500200}
   - component: {fileID: 3807967689805913959}
-  - component: {fileID: 4486494505963679225}
-  - component: {fileID: -1523742477689415723}
-  - component: {fileID: 2085787523459072265}
+  - component: {fileID: 1115665226388571590}
+  - component: {fileID: -4924334599900571432}
+  - component: {fileID: 5915474443684951185}
   m_Layer: 6
-  m_Name: RedFriend
+  m_Name: PurpleFriend
   m_TagString: Friend
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -172,7 +172,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!58 &835355691237669008
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -222,8 +222,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Runspeed: 2
   Roamspeed: 15
-  MinDistance: 2
-  MaxDistance: 5
+  MinDistance: 0.3
+  MaxDistance: 10
   DashDistance: 0
   NoMax: 0
   BDash: 0
@@ -241,9 +241,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Actions:
-  - {fileID: 2085787523459072265}
-  - {fileID: 4486494505963679225}
-  - {fileID: -1523742477689415723}
+  - {fileID: -4924334599900571432}
+  - {fileID: 5915474443684951185}
+  - {fileID: 5915474443684951185}
+  - {fileID: 5915474443684951185}
+  - {fileID: 1115665226388571590}
   aToggle: 0
   Ignore: 1
 --- !u!114 &3807967689805913959
@@ -259,22 +261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Ignore: 0
---- !u!114 &4486494505963679225
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7263488167769085252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3885b158dc084949a9327e5c5618e5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delay: 0
-  Prefab: {fileID: 413832739714760898, guid: 83333c845422dd348a73199fb3bc1b54, type: 3}
-  BRange: 0
---- !u!114 &-1523742477689415723
+--- !u!114 &1115665226388571590
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -287,7 +274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 0
---- !u!114 &2085787523459072265
+--- !u!114 &-4924334599900571432
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -296,7 +283,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 7263488167769085252}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 687e506e3a408794f94c87c4cf35fecd, type: 3}
+  m_Script: {fileID: 11500000, guid: e3885b158dc084949a9327e5c5618e5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0
+  Prefab: {fileID: 413832739714760898, guid: 5fed343dafdd5a04ebe5173837b6a90d, type: 3}
+  BRange: 0
+--- !u!114 &5915474443684951185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7263488167769085252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9730a4599d3b88d48ab42f8dbdf7c52c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 0

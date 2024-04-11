@@ -77,10 +77,6 @@ public class SeaCritterController : MonoBehaviour
 
     private void Update()
     {
-        if (Us.BossState)
-        {
-            transform.rotation = Quaternion.identity;
-        }
         if (!Spraying)
         {
             CooldownDisplay.fillAmount -= 1 / STimer * Time.deltaTime;
@@ -149,17 +145,13 @@ public class SeaCritterController : MonoBehaviour
             rb.drag = 1f;
         }
 
-        if (!LockedRotation && !Us.BossState)
+        if (!LockedRotation)
         {
             if (Direction != Vector3.zero)
             {
                 quaternion toRotation = quaternion.LookRotation(Vector3.forward, Direction);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, RSpeed * Time.deltaTime);
             }
-        }
-        else if(Us.BossState)
-        {
-            transform.rotation = Quaternion.identity;
         }
 
         if (Bboost)

@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6748065029477912950}
   - component: {fileID: 5461018381937093667}
   - component: {fileID: 3270115195136504650}
-  - component: {fileID: 3784283431013062460}
   - component: {fileID: 2409273314981310356}
   - component: {fileID: 4402007810161943982}
+  - component: {fileID: 9158572855739015988}
   m_Layer: 0
   m_Name: ClamBossAreaTrigger
   m_TagString: CamTarget
@@ -138,23 +138,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Actions:
   - {fileID: 2409273314981310356}
-  - {fileID: 3784283431013062460}
+  - {fileID: 9158572855739015988}
+  - {fileID: 9158572855739015988}
+  - {fileID: 9158572855739015988}
+  - {fileID: 9158572855739015988}
+  - {fileID: 9158572855739015988}
   - {fileID: 4402007810161943982}
   aToggle: 0
   Ignore: 1
---- !u!114 &3784283431013062460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7286941572055399562}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96605c3aea0fc804aa8d33e12e453a6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delay: 0.2
 --- !u!114 &2409273314981310356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +171,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00d2b80409666e342974e7900747e252, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0
+--- !u!114 &9158572855739015988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7286941572055399562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9730a4599d3b88d48ab42f8dbdf7c52c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 0

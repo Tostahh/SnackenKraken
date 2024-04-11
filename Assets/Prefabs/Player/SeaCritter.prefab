@@ -202,7 +202,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &5748142093947815687
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -357,6 +357,7 @@ MonoBehaviour:
   BubbleSpeed: 9
   Boost: 2
   SteathColor: {r: 0, g: 0, b: 0, a: 0.39215687}
+  LockedRotation: 0
   Direction: {x: 0, y: 0, z: 0}
   rb: {fileID: 0}
   SpecailIndicator: 0
