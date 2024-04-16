@@ -37,10 +37,14 @@ public class GameSystems : GameAction
     [SerializeField] private GameObject BossUI;
     [SerializeField] private TextMeshProUGUI BossName;
     [SerializeField] private Slider BossHeathBar;
+    [SerializeField] private GameObject Boss1;
+    [SerializeField] private GameObject Boss2;
+    [SerializeField] private GameObject Boss3;
 
     [SerializeField] private Sprite[] PowerSprites;
 
     public bool InPlay = false;
+    public int BossNumb;
     public int ScoreNumb;
     public float HealthNumb;
     public float SizeNumb;
@@ -107,6 +111,25 @@ public class GameSystems : GameAction
         if(BossState)
         {
             BossHeathBar.value = BossenemyHeath.Heath;
+        }
+
+        if(BossNumb >= 1)
+        {
+            Boss1.SetActive(true);
+        }
+        if(BossNumb >= 2)
+        {
+            Boss2.SetActive(true);
+        }
+        if(BossNumb >= 3)
+        {
+            Boss3.SetActive(true);
+        }
+        if(BossNumb < 1)
+        {
+            Boss1.SetActive(false);
+            Boss2.SetActive(false);
+            Boss3.SetActive(false);
         }
 
         if (SizeSilder.value >= 10)
@@ -194,6 +217,8 @@ public class GameSystems : GameAction
     private void FinishBoss()
     {
         BossState = false;
+        BossNumb++;
+        
         BossUI.SetActive(false);
         ExitBoss();
     }
@@ -268,6 +293,7 @@ public class GameSystems : GameAction
         ScoreNumb = 0;
         SS.ResetGame();
         Mc.ResetGame();
+        BossNumb = 0;
         Score.text = ScoreNumb.ToString();
         EndScreen.SetActive(false);
         Time.timeScale = 1;

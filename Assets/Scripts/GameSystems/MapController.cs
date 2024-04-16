@@ -10,14 +10,20 @@ public class MapController : MonoBehaviour
 
     [SerializeField] private float checkRadius;
 
+    private int BossChance;
+
     private Vector3 noSeaPos;
     private SeaCritterController Sc;
+    private GameSystems Gs;
+
+    private int BDone;
     
     public GameObject CurrentSeaChunk;
 
     private void Awake()
     {
         Sc = FindObjectOfType<SeaCritterController>();
+        Gs = FindObjectOfType<GameSystems>();
     }
 
     private void Update()
@@ -186,12 +192,41 @@ public class MapController : MonoBehaviour
     }
     private void SpawnSeaChunk()
     {
-        int x = Random.Range(0, SeaChunks.Count);
+        int x = Random.Range(0, SeaChunks.Count-3);
 
-        Instantiate(SeaChunks[x], noSeaPos, Quaternion.identity);
+        int BC = Random.Range(BossChance, 101);
+
+        if (BC == BossChance && Gs.BossNumb == 0 && BDone == 0)
+        {
+            BossChance = 10;
+            BDone++;
+            Mathf.Clamp(BossChance, 0, 100);
+            Instantiate(SeaChunks[3], noSeaPos, Quaternion.identity);
+        }
+        else if (BC == BossChance && Gs.BossNumb == 1 && BDone == 1)
+        {
+            BossChance = 30;
+            BDone++;
+            Mathf.Clamp(BossChance, 0, 100);
+            Instantiate(SeaChunks[4], noSeaPos, Quaternion.identity);
+        }
+        else if(BC == BossChance && Gs.BossNumb == 2 && BDone == 2)
+        {
+            BossChance = 70;
+            BDone++;
+            Mathf.Clamp(BossChance, 0, 100);
+            Instantiate(SeaChunks[5], noSeaPos, Quaternion.identity);
+        }
+        else
+        {
+            Instantiate(SeaChunks[x], noSeaPos, Quaternion.identity);
+            BossChance += 1;
+        }
     }
     public void ResetGame()
     {
+        BossChance = 0;
+        BDone = 0;
         CurrentSeaChunk = null;
     }
 }

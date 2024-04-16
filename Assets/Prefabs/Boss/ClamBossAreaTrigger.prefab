@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 2409273314981310356}
   - component: {fileID: 4402007810161943982}
   - component: {fileID: 9158572855739015988}
+  - component: {fileID: 2439621823062885332}
+  - component: {fileID: 7372735412631059989}
   m_Layer: 0
   m_Name: ClamBossAreaTrigger
   m_TagString: CamTarget
@@ -187,3 +189,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 0
+--- !u!114 &2439621823062885332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7286941572055399562}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2561c5576d714d4da58f3f180a5fa1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BossPrefab: {fileID: 0}
+  SpawnPos: {fileID: 0}
+  Boss: {fileID: 0}
+--- !u!114 &7372735412631059989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7286941572055399562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7ed5e329c022544bad8d50e106d27f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Tracker: {fileID: 7252374677001829292, guid: 61f32c1f47fc4db40af4767abc11a682, type: 3}

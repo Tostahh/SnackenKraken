@@ -33,6 +33,7 @@ public class SeaSpawner : MonoBehaviour
     private float timeSinceLastCheck;
     private GameObject Player;
 
+    private List<Critter> TempRemove = new List<Critter>();
     private void Awake()
     {
         Time.timeScale = 0;
@@ -269,12 +270,27 @@ public class SeaSpawner : MonoBehaviour
     }
     private void ExitBoss()
     {
+        if (TempRemove.Count > 0)
+        {
+            TempRemove.Clear();
+        }
+
         foreach (Critter c in SeaObjects)
         {
-            if (c != null)
+            if (c.gameObject == null)
+            {
+                TempRemove.Add(c);
+            }
+            else
             {
                 c.gameObject.SetActive(true);
             }
+        }
+
+        foreach(Critter c in TempRemove)
+        {
+            SeaObjects.Remove(c);
+            Destroy(c.gameObject);
         }
     }
 
