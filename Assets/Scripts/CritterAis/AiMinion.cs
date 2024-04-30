@@ -7,9 +7,7 @@ public class AiMinion : MonoBehaviour
 {
     [Header("Refs")]
     [SerializeField] private float RSpeed;
-    [SerializeField] private float Fps;
     [SerializeField] private float Bps;
-    [SerializeField] private float FiringDuration;
     [SerializeField] private float ProjectileSpeed;
     [SerializeField] private GameObject ProjectilePrefab;
     [SerializeField] private Transform FiringPoint;
@@ -20,6 +18,7 @@ public class AiMinion : MonoBehaviour
     private bool Stuned;
     private Vector3 Direction;
 
+    public bool Firing;
     private void Awake()
     {
         target = FindObjectOfType<SeaCritterController>().gameObject.transform;
@@ -27,20 +26,26 @@ public class AiMinion : MonoBehaviour
 
     private void Update()
     {
-        if(target)
+        if (!Firing)
         {
-            Direction = transform.position - target.transform.position;
-        }
-
-        BpsTimer += Time.deltaTime;
-        if (!Stuned)
-        {
-            if (BpsTimer >= Bps)
+            if (target)
             {
-                BpsTimer = 0;
-                Projectile bs;
-                bs = Instantiate(ProjectilePrefab, FiringPoint.position, quaternion.identity).GetComponent<Projectile>();
-                bs.Activate(ProjectileSpeed, -transform.up);
+                Direction = transform.position - target.transform.position;
+            }
+
+            BpsTimer += Time.deltaTime;
+            if (!Stuned)
+            {
+                if (!target.GetComponent<SeaCritterController>().SPower)
+                {
+                    if (BpsTimer >= Bps)
+                    {
+                        BpsTimer = 0;
+                        Projectile bs;
+                        bs = Instantiate(ProjectilePrefab, FiringPoint.position, quaternion.identity).GetComponent<Projectile>();
+                        bs.Activate(ProjectileSpeed, -transform.up);
+                    }
+                }
             }
         }
     }
@@ -48,8 +53,11 @@ public class AiMinion : MonoBehaviour
     {
         if (!Stuned)
         {
-            quaternion toRotation = quaternion.LookRotation(Vector3.forward, Direction);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, RSpeed * Time.deltaTime);
+            if (!target.GetComponent<SeaCritterController>().SPower)
+            {
+                quaternion toRotation = quaternion.LookRotation(Vector3.forward, Direction);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, RSpeed * Time.deltaTime);
+            }
         }
     }
     public void Stun()
@@ -61,5 +69,12 @@ public class AiMinion : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         Stuned = false;
+    }
+
+    public void Fire()
+    {
+        Projectile bs;
+        bs = Instantiate(ProjectilePrefab, FiringPoint.position, quaternion.identity).GetComponent<Projectile>();
+        bs.Activate(ProjectileSpeed, -transform.up);
     }
 }

@@ -307,6 +307,7 @@ public class SeaSpawner : MonoBehaviour
         eps = 0.09f;
         fps = 0.8f;
         Player.gameObject.transform.position = new Vector3(0, 0, 0);
+        Player.gameObject.transform.rotation = new Quaternion(0, 0, 0, Player.gameObject.transform.rotation.w);
         Player.GetComponent<SeaCritterController>().KnockedBack = false;
         Player.GetComponent<SeaCritterController>().SpecailIndicator = 0;
         Player.GetComponent<SeaCritterController>().ResetPower();

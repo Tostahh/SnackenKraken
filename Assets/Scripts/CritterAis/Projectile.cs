@@ -60,8 +60,11 @@ public class Projectile : MonoBehaviour
             if (!BDplayer)
             {
                 SeaCritterController Sc = other.GetComponent<SeaCritterController>();
-                Sc.ResetSpeed();
-                Sc.gameObject.transform.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.blue;
+                if (Sc)
+                {
+                    Sc.ResetSpeed();
+                    Sc.gameObject.transform.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.blue;
+                }
                 DisableSelf();
             }
         }
@@ -72,7 +75,7 @@ public class Projectile : MonoBehaviour
             AiShoot A = other.GetComponent<AiShoot>();
             AiMinion C = other.GetComponent<AiMinion>();
             AiMinionB D = other.GetComponent<AiMinionB>();
-            AiBoss Boss = other.GetComponent<AiBoss>();
+            ClamAiBoss Boss = other.GetComponent<ClamAiBoss>();
             EnemyHeath EH = other.GetComponent<EnemyHeath>();
             if (!Boss)
             {
@@ -93,7 +96,10 @@ public class Projectile : MonoBehaviour
                 {
                     D.Stun();
                 }
-                EH.Takeheath();
+                if (EH)
+                {
+                    EH.Takeheath();
+                }
                 DisableSelf();
             }
             else
@@ -105,7 +111,11 @@ public class Projectile : MonoBehaviour
                 else
                 {
                     IncreasePointsHit();
-                    EH.Takeheath();
+                    if (!BLife)
+                    {
+                        EH.Takeheath();
+                    }
+                    DisableSelf();
                 }
             }
         }
@@ -114,7 +124,10 @@ public class Projectile : MonoBehaviour
     {
         if (!Power)
         {
-            Instantiate(PopPrefab, transform.position, Quaternion.identity);
+            if (PopPrefab)
+            {
+                Instantiate(PopPrefab, transform.position, Quaternion.identity);
+            }
             Destroy(gameObject);
         }
     }

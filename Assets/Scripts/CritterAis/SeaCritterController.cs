@@ -87,51 +87,6 @@ public class SeaCritterController : MonoBehaviour
         }
 
         Direction = new Vector3(PC.Player.Movement.ReadValue<Vector2>().x, PC.Player.Movement.ReadValue<Vector2>().y, 0).normalized;
-
-        if(Us.SizeNumb == 0)
-        {
-            transform.localScale = Vector3.one;
-        }
-        else if(Us.SizeNumb == 1)
-        {
-            transform.localScale = new Vector3(1.15f, 1.15f, 1.15f);
-        }
-        else if(Us.SizeNumb == 2)
-        {
-            transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
-        }
-        else if(Us.SizeNumb == 3)
-        {
-            transform.localScale = new Vector3(1.45f, 1.45f, 1.45f);
-        }
-        else if (Us.SizeNumb == 4)
-        {
-            transform.localScale = new Vector3(1.6f, 1.6f, 1.6f);
-        }
-        else if (Us.SizeNumb == 5)
-        {
-            transform.localScale = new Vector3(1.75f, 1.75f, 1.75f);
-        }
-        else if (Us.SizeNumb == 6)
-        {
-            transform.localScale = new Vector3(1.9f, 1.9f, 1.9f);
-        }
-        else if (Us.SizeNumb == 7)
-        {
-            transform.localScale = new Vector3(2.05f, 2.05f, 2.05f);
-        }
-        else if (Us.SizeNumb == 8)
-        {
-            transform.localScale = new Vector3(2.2f, 2.2f, 2.2f);
-        }
-        else if (Us.SizeNumb == 9)
-        {
-            transform.localScale = new Vector3(2.35f, 2.35f, 2.35f);
-        }
-        else if (Us.SizeNumb == 10)
-        {
-            transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
-        }
     }
 
     private void FixedUpdate()

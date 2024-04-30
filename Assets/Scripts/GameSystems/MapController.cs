@@ -194,27 +194,27 @@ public class MapController : MonoBehaviour
     {
         int x = Random.Range(0, SeaChunks.Count-3);
 
-        int BC = Random.Range(BossChance, 101);
+        int BC = Random.Range(BossChance, 51);
 
         if (BC == BossChance && Gs.BossNumb == 0 && BDone == 0)
         {
-            BossChance = 10;
+            BossChance = 5;
             BDone++;
-            Mathf.Clamp(BossChance, 0, 100);
+            Mathf.Clamp(BossChance, 0, 50);
             Instantiate(SeaChunks[3], noSeaPos, Quaternion.identity);
         }
         else if (BC == BossChance && Gs.BossNumb == 1 && BDone == 1)
         {
-            BossChance = 30;
+            BossChance = 20;
             BDone++;
-            Mathf.Clamp(BossChance, 0, 100);
+            Mathf.Clamp(BossChance, 0, 50);
             Instantiate(SeaChunks[4], noSeaPos, Quaternion.identity);
         }
         else if(BC == BossChance && Gs.BossNumb == 2 && BDone == 2)
         {
-            BossChance = 70;
+            BossChance = 35;
             BDone++;
-            Mathf.Clamp(BossChance, 0, 100);
+            Mathf.Clamp(BossChance, 0, 50);
             Instantiate(SeaChunks[5], noSeaPos, Quaternion.identity);
         }
         else

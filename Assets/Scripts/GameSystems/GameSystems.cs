@@ -23,15 +23,21 @@ public class GameSystems : GameAction
     [SerializeField] private GameObject StartScreen;
     [SerializeField] private GameObject PauseScreen;
     [SerializeField] private GameObject EndScreen;
+    [SerializeField] private GameObject VictoryScreen;
+    [SerializeField] private GameObject GoAgainB;
     [SerializeField] private GameObject TryAgainB;
     [SerializeField] private GameObject ResumeB;
     [SerializeField] private TextMeshProUGUI Score;
     [SerializeField] private TextMeshProUGUI ScoreF;
+    [SerializeField] private TextMeshProUGUI ScoreV;
     [SerializeField] private TextMeshProUGUI ScoreP;
     [SerializeField] private TextMeshProUGUI HighScoreE;
+    [SerializeField] private TextMeshProUGUI HighScoreV;
     [SerializeField] private TextMeshProUGUI SHighScore;
     [SerializeField] private TextMeshProUGUI HighPScore;
-    [SerializeField] private AudioSource As;
+    [SerializeField] private AudioSource AsLose;
+    [SerializeField] private AudioSource AsWin;
+    [SerializeField] private AudioSource BossAs;
 
     [Header("BossRefs")]
     [SerializeField] private GameObject BossUI;
@@ -42,6 +48,7 @@ public class GameSystems : GameAction
     [SerializeField] private GameObject Boss3;
 
     [SerializeField] private Sprite[] PowerSprites;
+    [SerializeField] private Animator Animator;
 
     public bool InPlay = false;
     public int BossNumb;
@@ -57,6 +64,7 @@ public class GameSystems : GameAction
     private PlayerController PC;
     private SeaCritterController Sc;
     private EnemyHeath BossenemyHeath;
+    private bool BVictory;
 
     private void OnEnable()
     {
@@ -124,6 +132,11 @@ public class GameSystems : GameAction
         if(BossNumb >= 3)
         {
             Boss3.SetActive(true);
+            if(!BVictory)
+            {
+                BVictory = true;
+                Victory();
+            }
         }
         if(BossNumb < 1)
         {
@@ -205,9 +218,10 @@ public class GameSystems : GameAction
 
     private void TriggerBoss()
     {
+        Animator.SetTrigger("trans");
         BossState = true;
         BossName.text = FindObjectOfType<AiBoss>().BossName;
-        BossenemyHeath = FindObjectOfType<AiBoss>().gameObject.GetComponent<EnemyHeath>();
+        BossenemyHeath = FindObjectOfType<AiBoss>().gameObject.GetComponentInChildren<EnemyHeath>();
         BossHeathBar.maxValue = BossenemyHeath.MaxHeath;
         BossHeathBar.value = BossHeathBar.maxValue;
         BossUI.SetActive(true);
@@ -216,15 +230,24 @@ public class GameSystems : GameAction
 
     private void FinishBoss()
     {
+        Animator.SetTrigger("trans");
+        BossAs.Play();
         BossState = false;
         BossNumb++;
         
         BossUI.SetActive(false);
         ExitBoss();
     }
+
+    private void FakeFinishBoss()
+    {
+        BossState = false;
+        BossUI.SetActive(false);
+        ExitBoss();
+    }
     private void Die()
     {
-        As.Play();
+        AsLose.Play();
         InPlay = false;
         if (!PlayerPrefs.HasKey("HighScore"))
         {
@@ -243,6 +266,35 @@ public class GameSystems : GameAction
         EndScreen.SetActive(true);
         Time.timeScale = 0;
         Debug.Log("Dead");
+    }
+
+    private void Victory()
+    {
+        AsWin.Play();
+        InPlay = false;
+        if (!PlayerPrefs.HasKey("HighScore"))
+        {
+            PlayerPrefs.SetInt("HighScore", ScoreNumb);
+        }
+        else if (PlayerPrefs.GetInt("HighScore") < ScoreNumb)
+        {
+            PlayerPrefs.SetInt("HighScore", ScoreNumb);
+        }
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(GoAgainB);
+
+        ScoreV.text = ScoreNumb.ToString();
+        HighScoreV.text = PlayerPrefs.GetInt("HighScore").ToString();
+        VictoryScreen.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    public void Continue()
+    {
+        InPlay = true;
+        VictoryScreen.SetActive(false);
+        Time.timeScale = 1;
     }
 
     public void StartGame()
@@ -278,7 +330,7 @@ public class GameSystems : GameAction
             Paused = false;
             PauseScreen.SetActive(false);
         }
-        FinishBoss();
+        FakeFinishBoss();
         if (FindObjectOfType<BossAreana>())
         {
             Destroy(FindObjectOfType<BossAreana>().gameObject);

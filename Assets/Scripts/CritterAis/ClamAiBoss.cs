@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Mathematics;
 
-public class AiBoss : MonoBehaviour
+public class ClamAiBoss : AiBoss
 {
-    [SerializeField] public string BossName;
-    [SerializeField] private int Phase;
     [SerializeField] private Animator animator;
     [SerializeField] private LayerMask SpawnPointMask;
     [SerializeField] private CircleCollider2D circleCollider;
@@ -28,94 +26,101 @@ public class AiBoss : MonoBehaviour
     [SerializeField] private Transform FiringPoint4;
     [SerializeField] private Transform FiringPoint5;
 
+    [SerializeField] private ParticleSystem ParticleSystem;
+
+    [SerializeField] private float BossWait;
+
 
     public List <Transform> spawnpoints = new List<Transform>();
     public List <GameObject> Minions = new List<GameObject>();
 
     private float AttackTimer;
-
-    private EnemyHeath BossHeath;
-    private Transform target;
     private Vector3 Direction;
     public bool Protected;
+    public bool Active;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+        ParticleSystem = GetComponentInChildren<ParticleSystem>();
         animator = GetComponentInChildren<Animator>();
-        BossHeath = GetComponentInChildren<EnemyHeath>();
-        target = FindObjectOfType<SeaCritterController>().gameObject.transform;
         FindSpawnPoints();
 
-        BossIntro();
-        Phase = 1;
+        StartCoroutine(BossIntro());
     }
     private void Update()
     {
-        CheckHeath();
-        CheckMinions();
-        if (Protected)
+        if (Active)
         {
-            BossShield.SetActive(true);
-            circleCollider.enabled = true;
-        }
-        else
-        {
-            BossShield.SetActive(false);
-            circleCollider.enabled = false;
-        }
-
-
-        if (target)
-        {
-            Direction = transform.position - target.transform.position;
-        }
-
-        AttackTimer += Time.deltaTime;
-        if (Minions.Count < 1)
-        {
-            Protected = false;
-            if (AttackTimer >= AttackInterval)
+            CheckHeath();
+            CheckMinions();
+            if (Protected)
             {
-                int x = UnityEngine.Random.Range(1, 5);
-                if (x == 1)
-                {
-                    SpawnMinions();
-
-                }
-                if (x == 2)
-                {
-                    SpawnHelp();
-                }
-                else
-                {
-                    Shoot();
-                }
-                AttackTimer = 0;
+                BossShield.SetActive(true);
+                circleCollider.enabled = true;
             }
-        }
-        else
-        {
-            if (AttackTimer >= AttackInterval)
+            else
             {
-                int x = UnityEngine.Random.Range(1, 4);
-                if (x < 3)
-                {
-                    Shoot();
-                }
-                else
-                {
-                    SpawnHelp();
-                }
-                AttackTimer = 0;
+                BossShield.SetActive(false);
+                circleCollider.enabled = false;
             }
-            Protected = true;
+
+
+            if (target)
+            {
+                Direction = transform.position - target.transform.position;
+            }
+
+            AttackTimer += Time.deltaTime;
+            if (Minions.Count < 1)
+            {
+                Protected = false;
+                if (AttackTimer >= AttackInterval)
+                {
+                    int x = UnityEngine.Random.Range(1, 5);
+                    if (x == 1)
+                    {
+                        SpawnMinions();
+
+                    }
+                    if (x == 2)
+                    {
+                        SpawnHelp();
+                    }
+                    else
+                    {
+                        Shoot();
+                    }
+                    AttackTimer = 0;
+                }
+            }
+            else
+            {
+                if (AttackTimer >= AttackInterval)
+                {
+                    int x = UnityEngine.Random.Range(1, 4);
+                    if (x < 3)
+                    {
+                        Shoot();
+                    }
+                    else
+                    {
+                        SpawnHelp();
+                    }
+                    AttackTimer = 0;
+                }
+                Protected = true;
+            }
         }
     }
 
     private void FixedUpdate()
     {
-        quaternion toRotation = quaternion.LookRotation(Vector3.forward, Direction);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, RSpeed * Time.deltaTime);
+        if (Active)
+        {
+            quaternion toRotation = quaternion.LookRotation(Vector3.forward, Direction);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, RSpeed * Time.deltaTime);
+        }
     }
 
     private void SpawnMinions()
@@ -223,14 +228,12 @@ public class AiBoss : MonoBehaviour
         }
     }
     
-    private void CheckHeath()
+    public override void CheckHeath()
     {
-        if(BossHeath.Heath < (BossHeath.MaxHeath/4f) && Phase != 2)
+        base.CheckHeath();
+        if(Phase == 2)
         {
-            BossHeath.Heath = BossHeath.MaxHeath;
-            Phase = 2;
-            SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
-            sr.sprite = Phase2Sprite;
+            GetComponentInChildren<SpriteRenderer>().sprite = Phase2Sprite;
         }
     }
     private void CheckMinions()
@@ -265,8 +268,12 @@ public class AiBoss : MonoBehaviour
         }
     }
 
-    private void BossIntro()
-    {
 
+    public override IEnumerator BossIntro()
+    {
+        yield return new WaitForSeconds(BossWait);
+        animator.SetTrigger("Start");
+        ParticleSystem.Play();
+        Active = true;
     }
 }

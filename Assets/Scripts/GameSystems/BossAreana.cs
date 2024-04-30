@@ -34,7 +34,7 @@ public class BossAreana : MonoBehaviour
 
     private void BossStop()
     {
-        Destroy(gameObject);
         StopBoss();
+        Destroy(gameObject);
     }
 }
