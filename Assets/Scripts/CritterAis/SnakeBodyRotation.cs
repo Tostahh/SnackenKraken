@@ -11,9 +11,12 @@ public class SnakeBodyRotation : MonoBehaviour
     private Vector3 Direction;
     void Update()
     {
-        Direction = transform.position - target.transform.position;
-        float angle = Mathf.Atan2(Direction.y, Direction.x) * Mathf.Rad2Deg;
-        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, RSpeed * Time.deltaTime);
+        if (target)
+        {
+            Direction = transform.position - target.transform.position;
+            float angle = Mathf.Atan2(Direction.y, Direction.x) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, RSpeed * Time.deltaTime);
+        }
     }
 }

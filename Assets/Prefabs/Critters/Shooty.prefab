@@ -332,7 +332,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 71fb0d0adc1355d47a58f8c0dd519789, type: 3}
+  m_audioClip: {fileID: 8300000, guid: ebcfd3dbef3ea8e4ab64b82fb28fa815, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -432,6 +432,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHeath: 1
   DeathPrefab: {fileID: 7263488167769085252, guid: d427c856ac335bc408985f8ce7c0b179, type: 3}
+  Snake: 0
+  Heath: 0
 --- !u!1 &1977616321277416290
 GameObject:
   m_ObjectHideFlags: 0

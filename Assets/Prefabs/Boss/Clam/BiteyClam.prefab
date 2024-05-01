@@ -56,7 +56,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 71fb0d0adc1355d47a58f8c0dd519789, type: 3}
+  m_audioClip: {fileID: 8300000, guid: ebcfd3dbef3ea8e4ab64b82fb28fa815, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.6
   m_Pitch: 1
@@ -433,6 +433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHeath: 1
   DeathPrefab: {fileID: 7263488167769085252, guid: 2cc42a5dd7698d740887b78bad807a39, type: 3}
+  Snake: 0
   Heath: 0
 --- !u!114 &4095964732872156246
 MonoBehaviour:

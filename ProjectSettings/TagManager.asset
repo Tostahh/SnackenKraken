@@ -9,6 +9,7 @@ TagManager:
   - Friend
   - CamTarget
   - Point
+  - Obsticle
   layers:
   - Default
   - TransparentFX

@@ -17,10 +17,9 @@ GameObject:
   - component: {fileID: 9158572855739015988}
   - component: {fileID: 2439621823062885332}
   - component: {fileID: 7372735412631059989}
-  - component: {fileID: -6967919636499877434}
-  - component: {fileID: 4653372443563502149}
+  - component: {fileID: 3425020544441825047}
   m_Layer: 0
-  m_Name: ClamBossAreaTrigger
+  m_Name: SnakeBossAreaTrigger
   m_TagString: CamTarget
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82,7 +81,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0e9d6e9f65812e94aab3ee5c9c879da2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 149d96d0ff61b80489e4d42bef329600, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -163,7 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 0
-  Prefab: {fileID: 541829079743575273, guid: f64c9d2c099826a4c892b0c8453fc9ca, type: 3}
+  Prefab: {fileID: 541829079743575273, guid: d84307c4536bc924e8f20b717720511c, type: 3}
   BRange: 0
 --- !u!114 &4402007810161943982
 MonoBehaviour:
@@ -219,19 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tracker: {fileID: 7252374677001829292, guid: 61f32c1f47fc4db40af4767abc11a682, type: 3}
---- !u!114 &-6967919636499877434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7286941572055399562}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb8789dd2f1820c41ae50e265cc6aefd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4653372443563502149
+--- !u!114 &3425020544441825047
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -119,6 +119,11 @@ public class Projectile : MonoBehaviour
                 }
             }
         }
+
+        if(other.CompareTag("Obsticle"))
+        {
+            DisableSelf();
+        }
     }
     private void DisableSelf()
     {

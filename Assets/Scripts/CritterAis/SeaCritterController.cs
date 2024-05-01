@@ -20,7 +20,7 @@ public class SeaCritterController : MonoBehaviour
     [SerializeField] private float RSpeed;
     [SerializeField] private float Speed;
     [SerializeField] private float BubbleSpeed;
-    [SerializeField] private float Boost;
+    [SerializeField] private float Ink;
     [SerializeField] private Color SteathColor;
     [SerializeField] private bool LockedRotation;
 
@@ -52,6 +52,7 @@ public class SeaCritterController : MonoBehaviour
         sr = GetComponentInChildren<SpriteRenderer>();
         Us = FindObjectOfType<GameSystems>();
         Pas = GetComponent<ParticleSystem>();
+        Ink = Us.InkSilder.maxValue;
         CooldownDisplay.fillAmount = 0;
         SpecailIndicator = 0;
         Scolor = sr.color;
@@ -109,49 +110,24 @@ public class SeaCritterController : MonoBehaviour
             }
         }
 
-        if (Bboost)
+        rb.AddForce(Direction * Speed);
+
+        if (rb.velocity.x > 9f)
         {
-            rb.AddForce(Direction * Speed * Boost);
-
-            if (rb.velocity.x > 10.5f)
-            {
-                rb.velocity = new Vector2(10.5f, rb.velocity.y);
-            }
-            if (rb.velocity.x < -10.5f)
-            {
-                rb.velocity = new Vector2(-10.5f, rb.velocity.y);
-            }
-
-            if (rb.velocity.y > 10.5f)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, 10.5f);
-            }
-            if (rb.velocity.y < -10.5f)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, -10.5f);
-            }
+            rb.velocity = new Vector2(9, rb.velocity.y);
         }
-        else
+        if (rb.velocity.x < -9f)
         {
-            rb.AddForce(Direction * Speed);
+            rb.velocity = new Vector2(-9, rb.velocity.y);
+        }
 
-            if (rb.velocity.x > 7f)
-            {
-                rb.velocity = new Vector2(7, rb.velocity.y);
-            }
-            if (rb.velocity.x < -7f)
-            {
-                rb.velocity = new Vector2(-7, rb.velocity.y);
-            }
-
-            if (rb.velocity.y > 7f)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, 7);
-            }
-            if (rb.velocity.y < -7f)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, -7);
-            }
+        if (rb.velocity.y > 9f)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, 9);
+        }
+        if (rb.velocity.y < -9f)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, -9);
         }
     }
 
@@ -172,7 +148,7 @@ public class SeaCritterController : MonoBehaviour
         if (!Shot)
         {
             Shot = true;
-            if (Us.SizeNumb > 0)
+            if (Us.InkNumb > 0)
             {
                 Pas.Play();
                 Us.DecreaseSize();
@@ -275,14 +251,14 @@ public class SeaCritterController : MonoBehaviour
 
     private IEnumerator Spray()
     {
-        int x = Mathf.RoundToInt(Us.SizeNumb);
+        int x = Mathf.RoundToInt(Us.InkNumb);
         if (x > 0)
         {
             Pas.Play();
         }
         for (int i = 0; i < x; i++)
         {
-            if (Us.SizeNumb > 0)
+            if (Us.InkNumb > 0)
             {
                 Us.DecreaseSize();
             }
@@ -306,7 +282,7 @@ public class SeaCritterController : MonoBehaviour
 
     private IEnumerator ActivateShield()
     {
-        int x = Mathf.RoundToInt(Us.SizeNumb);
+        int x = Mathf.RoundToInt(Us.InkNumb);
 
         if (x > 0)
         {
@@ -314,7 +290,7 @@ public class SeaCritterController : MonoBehaviour
 
             for (int i = 0; i < x; i++)
             {
-                if (Us.SizeNumb > 0)
+                if (Us.InkNumb > 0)
                 {
                     Us.DecreaseSize();
                 }
@@ -335,7 +311,7 @@ public class SeaCritterController : MonoBehaviour
 
     private IEnumerator Steath()
     {
-        int x = Mathf.RoundToInt(Us.SizeNumb);
+        int x = Mathf.RoundToInt(Us.InkNumb);
 
         if (x > 0)
         {
@@ -343,7 +319,7 @@ public class SeaCritterController : MonoBehaviour
 
             for (int i = 0; i < x; i++)
             {
-                if (Us.SizeNumb > 0)
+                if (Us.InkNumb > 0)
                 {
                     Us.DecreaseSize();
                 }

@@ -248,7 +248,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 68151a19499dc6941bb76a1572584b99, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 4e182363c18b18d4da1bf6fe3fe2374e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.7
   m_Pitch: 1
@@ -353,9 +353,9 @@ MonoBehaviour:
   CooldownDisplay: {fileID: 0}
   Fcooldown: 0.5
   RSpeed: 300
-  Speed: 10
-  BubbleSpeed: 9
-  Boost: 2
+  Speed: 9
+  BubbleSpeed: 12
+  Ink: 0
   SteathColor: {r: 0, g: 0, b: 0, a: 0.39215687}
   LockedRotation: 0
   Direction: {x: 0, y: 0, z: 0}

@@ -16,7 +16,7 @@ public class IncreaseSizeGA : GameAction
     }
     public override void Action()
     {
-        if(Us.SizeNumb+1 != 11)
+        if(Us.InkNumb+1 != 11)
         {
             target.localScale += new Vector3(0.15f, 0.15f, 0.15f);
         }

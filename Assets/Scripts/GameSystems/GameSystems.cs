@@ -15,7 +15,7 @@ public class GameSystems : GameAction
     public static Action ExitBoss = delegate { };
 
     [Header("PlayerRefs")]
-    [SerializeField] private Slider SizeSilder;
+    [SerializeField] public Slider InkSilder;
     [SerializeField] private Slider healthSlider;
     [SerializeField] private Image PowerUpDisplay;
 
@@ -27,6 +27,7 @@ public class GameSystems : GameAction
     [SerializeField] private GameObject GoAgainB;
     [SerializeField] private GameObject TryAgainB;
     [SerializeField] private GameObject ResumeB;
+    [SerializeField] private TextMeshProUGUI BossUP;
     [SerializeField] private TextMeshProUGUI Score;
     [SerializeField] private TextMeshProUGUI ScoreF;
     [SerializeField] private TextMeshProUGUI ScoreV;
@@ -49,12 +50,13 @@ public class GameSystems : GameAction
 
     [SerializeField] private Sprite[] PowerSprites;
     [SerializeField] private Animator Animator;
+    [SerializeField] private Animator AnimatorB;
 
     public bool InPlay = false;
     public int BossNumb;
     public int ScoreNumb;
     public float HealthNumb;
-    public float SizeNumb;
+    public float InkNumb;
 
     public bool Paused;
     public bool BossState;
@@ -96,8 +98,8 @@ public class GameSystems : GameAction
         PC.Enable();
         healthSlider.value = 10;
         HealthNumb = healthSlider.value;
-        SizeSilder.value = 0;
-        SizeNumb = SizeSilder.value;
+        InkSilder.value = InkSilder.maxValue;
+        InkNumb = InkSilder.value;
         ScoreNumb = 0;
     }
 
@@ -121,31 +123,7 @@ public class GameSystems : GameAction
             BossHeathBar.value = BossenemyHeath.Heath;
         }
 
-        if(BossNumb >= 1)
-        {
-            Boss1.SetActive(true);
-        }
-        if(BossNumb >= 2)
-        {
-            Boss2.SetActive(true);
-        }
-        if(BossNumb >= 3)
-        {
-            Boss3.SetActive(true);
-            if(!BVictory)
-            {
-                BVictory = true;
-                Victory();
-            }
-        }
-        if(BossNumb < 1)
-        {
-            Boss1.SetActive(false);
-            Boss2.SetActive(false);
-            Boss3.SetActive(false);
-        }
-
-        if (SizeSilder.value >= 10)
+        if (InkSilder.value >= 10)
         {
             ActivateBoost();
         }
@@ -173,17 +151,17 @@ public class GameSystems : GameAction
 
     private void IncreaseSize()
     {
-        SizeSilder.value++;
-        SizeNumb = SizeSilder.value;
+        InkSilder.value++;
+        InkNumb = InkSilder.value;
     }
     public void DecreaseSize()
     {
-        SizeSilder.value--;
-        if(SizeSilder.value<0)
+        InkSilder.value--;
+        if(InkSilder.value<0)
         {
-            SizeSilder.value = 0;
+            InkSilder.value = 0;
         }
-        SizeNumb = SizeSilder.value;
+        InkNumb = InkSilder.value;
     }
 
     private void IncreaseScore()
@@ -218,7 +196,7 @@ public class GameSystems : GameAction
 
     private void TriggerBoss()
     {
-        Animator.SetTrigger("trans");
+        Animator.SetTrigger("Trans");
         BossState = true;
         BossName.text = FindObjectOfType<AiBoss>().BossName;
         BossenemyHeath = FindObjectOfType<AiBoss>().gameObject.GetComponentInChildren<EnemyHeath>();
@@ -230,11 +208,27 @@ public class GameSystems : GameAction
 
     private void FinishBoss()
     {
-        Animator.SetTrigger("trans");
+        Animator.SetTrigger("Trans");
         BossAs.Play();
         BossState = false;
         BossNumb++;
-        
+        if (BossNumb == 1)
+        {
+            BossUP.text = "MAX INK INCREASED";
+            InkSilder.maxValue += 5;
+            AnimatorB.SetTrigger("Crown1");
+        }
+        else if (BossNumb == 2)
+        {
+            BossUP.text = "DAMAGE INCREASED";
+            AnimatorB.SetTrigger("Crown2");
+        }
+        else
+        {
+            BossUP.text = "MAX HEALTH INCREASED";
+            healthSlider.maxValue += 10;
+            AnimatorB.SetTrigger("Crown3");
+        }
         BossUI.SetActive(false);
         ExitBoss();
     }
@@ -338,15 +332,18 @@ public class GameSystems : GameAction
         InPlay = true;
         SeaSpawner SS = FindObjectOfType<SeaSpawner>();
         MapController Mc = FindObjectOfType<MapController>();
+        healthSlider.maxValue = 10;
         healthSlider.value = 10;
         HealthNumb = healthSlider.value;
-        SizeSilder.value = 0;
-        SizeNumb = SizeSilder.value;
+        InkSilder.maxValue = 10;
+        InkSilder.value = 10;
+        InkNumb = InkSilder.value;
         ScoreNumb = 0;
         SS.ResetGame();
         Mc.ResetGame();
         BossNumb = 0;
         Score.text = ScoreNumb.ToString();
+        AnimatorB.SetTrigger("Reset");
         EndScreen.SetActive(false);
         Time.timeScale = 1;
     }
