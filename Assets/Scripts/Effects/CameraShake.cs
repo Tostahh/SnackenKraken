@@ -16,11 +16,13 @@ public class CameraShake : MonoBehaviour
     private void OnEnable()
     {
         ShakeCamGA.Shake += Go;
+        SnakeBossAi.Shake += GroundRumble;
     }
 
     private void OnDisable()
     {
         ShakeCamGA.Shake -= Go;
+        SnakeBossAi.Shake -= GroundRumble;
     }
 
     private void Awake()
@@ -52,5 +54,11 @@ public class CameraShake : MonoBehaviour
     {
         Done = false;
         shakeDuration = 0.2f;
+    }
+
+    private void GroundRumble()
+    {
+        Done = false;
+        shakeDuration = 3f;
     }
 }

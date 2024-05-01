@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Mathematics;
+using System;
 using System.IO;
 using System.Threading;
 
 public class SnakeBossAi : AiBoss
 {
+    public static Action Shake = delegate { };
+
     [SerializeField] private Transform[] ControllerTargets;
 
     [SerializeField] private Transform[] ControllerTargets2;
@@ -24,6 +27,7 @@ public class SnakeBossAi : AiBoss
     [SerializeField] private int CurrentTarget;
 
     public bool Main;
+    public bool Active;
 
     private Vector3 Direction;
     private bool Fired;
@@ -35,7 +39,6 @@ public class SnakeBossAi : AiBoss
     public override void Awake()
     {
         base.Awake();
-        StartCoroutine(BossIntro());
     }
 
     void Update()
@@ -329,5 +332,6 @@ public class SnakeBossAi : AiBoss
     {
         yield return new WaitForSeconds(1f);
         dashing = false;
+        Shake();
     }
 }

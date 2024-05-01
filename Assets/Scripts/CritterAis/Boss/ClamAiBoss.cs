@@ -6,6 +6,7 @@ using Unity.Mathematics;
 public class ClamAiBoss : AiBoss
 {
     [SerializeField] private Animator animator;
+    [SerializeField] private AudioSource Audio;
     [SerializeField] private LayerMask SpawnPointMask;
     [SerializeField] private CircleCollider2D circleCollider;
     [SerializeField] private Sprite Phase2Sprite;
@@ -273,6 +274,7 @@ public class ClamAiBoss : AiBoss
     {
         yield return new WaitForSeconds(BossWait);
         animator.SetTrigger("Start");
+        Audio.Play();
         ParticleSystem.Play();
         Active = true;
     }
