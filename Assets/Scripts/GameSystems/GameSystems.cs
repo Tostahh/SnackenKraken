@@ -222,7 +222,7 @@ public class GameSystems : GameAction
 
         if (BossNumb >= 3 && !BVictory)
         {
-            Victory();
+            StartCoroutine(WinWait());
         }
     }
     private void FakeFinishBoss()
@@ -279,6 +279,7 @@ public class GameSystems : GameAction
     {
         InPlay = true;
         VictoryScreen.SetActive(false);
+        PauseScreen.SetActive(false);
         Time.timeScale = 1;
     }
     public void StartGame()
@@ -321,6 +322,7 @@ public class GameSystems : GameAction
         InPlay = true;
         SeaSpawner SS = FindObjectOfType<SeaSpawner>();
         MapController Mc = FindObjectOfType<MapController>();
+        PopUpUIManger PP = FindObjectOfType<PopUpUIManger>();
         healthSlider.maxValue = 10;
         healthSlider.value = 10;
         HealthNumb = healthSlider.value;
@@ -330,6 +332,7 @@ public class GameSystems : GameAction
         ScoreNumb = 0;
         SS.ResetGame();
         Mc.ResetGame();
+        PP.Reset();
         BossNumb = 0;
         Score.text = ScoreNumb.ToString();
         AnimatorB.SetTrigger("Reset");
@@ -339,5 +342,11 @@ public class GameSystems : GameAction
     public void Quit()
     {
         Application.Quit();
+    }
+
+    private IEnumerator WinWait()
+    {
+        yield return new WaitForSeconds(5f);
+        Victory();
     }
 }

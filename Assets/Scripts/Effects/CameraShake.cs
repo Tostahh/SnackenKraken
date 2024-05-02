@@ -53,12 +53,18 @@ public class CameraShake : MonoBehaviour
     private void Go()
     {
         Done = false;
-        shakeDuration = 0.2f;
+        if (shakeDuration <= 0)
+        {
+            shakeDuration = 0.2f;
+        }
     }
 
     private void GroundRumble()
     {
         Done = false;
-        shakeDuration = 3f;
+        if (shakeDuration <= 0)
+        {
+            shakeDuration = 3f;
+        }
     }
 }

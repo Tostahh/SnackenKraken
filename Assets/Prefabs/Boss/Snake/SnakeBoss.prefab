@@ -1258,8 +1258,6 @@ MonoBehaviour:
   Runspeed: 18
   TiredTime: 5
   CurrentTarget: 0
-  BossWait: 0
-  animator: {fileID: 4688389111424487898}
   Main: 1
   Active: 0
 --- !u!114 &8020546271100029168
@@ -3488,7 +3486,7 @@ GameObject:
   - component: {fileID: 3412259276909914111}
   - component: {fileID: 7363837451166167126}
   m_Layer: 6
-  m_Name: Body
+  m_Name: BodyController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4943,8 +4941,6 @@ MonoBehaviour:
   Runspeed: 18
   TiredTime: 5
   CurrentTarget: 0
-  BossWait: 0
-  animator: {fileID: 0}
   Main: 0
   Active: 0
 --- !u!114 &6856625208792253762

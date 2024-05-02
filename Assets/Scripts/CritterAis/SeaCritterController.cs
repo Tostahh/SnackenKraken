@@ -73,16 +73,19 @@ public class SeaCritterController : MonoBehaviour
 
     private void Update()
     {
-        if (!Spraying)
+        if (Us.InPlay)
         {
-            CooldownDisplay.fillAmount -= 1 / STimer * Time.deltaTime;
-            if(CooldownDisplay.fillAmount <= 0)
+            if (!Spraying)
             {
-                CooldownDisplay.fillAmount = 0;
+                CooldownDisplay.fillAmount -= 1 / STimer * Time.deltaTime;
+                if (CooldownDisplay.fillAmount <= 0)
+                {
+                    CooldownDisplay.fillAmount = 0;
+                }
             }
-        }
 
-        Direction = new Vector3(PC.Player.Movement.ReadValue<Vector2>().x, PC.Player.Movement.ReadValue<Vector2>().y, 0).normalized;
+            Direction = new Vector3(PC.Player.Movement.ReadValue<Vector2>().x, PC.Player.Movement.ReadValue<Vector2>().y, 0).normalized;
+        }
     }
 
     private void FixedUpdate()
@@ -140,21 +143,24 @@ public class SeaCritterController : MonoBehaviour
 
     private void BlowBubbles(InputAction.CallbackContext Shoot)
     {
-        if (!Shot)
+        if (Us.InPlay)
         {
-            Shot = true;
-            if (Us.InkNumb > 0)
+            if (!Shot)
             {
-                Pas.Play();
-                Us.DecreaseInk();
+                Shot = true;
+                if (Us.InkNumb > 0)
+                {
+                    Pas.Play();
+                    Us.DecreaseInk();
 
-                Projectile bs;
-                bs = Instantiate(ProjectilePrefab, FiringPoint).GetComponent<Projectile>();
-                bs.transform.localPosition = Vector3.zero;
-                bs.transform.parent = null;
-                bs.Activate(BubbleSpeed, transform.up);
+                    Projectile bs;
+                    bs = Instantiate(ProjectilePrefab, FiringPoint).GetComponent<Projectile>();
+                    bs.transform.localPosition = Vector3.zero;
+                    bs.transform.parent = null;
+                    bs.Activate(BubbleSpeed, transform.up);
+                }
+                StartCoroutine(FireCoolDown());
             }
-            StartCoroutine(FireCoolDown());
         }
     }
 

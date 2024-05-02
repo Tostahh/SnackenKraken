@@ -4,9 +4,12 @@ using System.Runtime.CompilerServices;
 using Unity.Mathematics;
 using Unity.VisualScripting.AssemblyQualifiedNameParser;
 using UnityEngine;
+using System;
 
 public class DirectionArrow : MonoBehaviour
 {
+    public static Action BossSpawn = delegate { };
+
     private Transform TransformTarget;
     private Transform RotationTarget;
 
@@ -14,6 +17,7 @@ public class DirectionArrow : MonoBehaviour
     {
         TransformTarget = FindObjectOfType<SeaCritterController>().transform;
         RotationTarget = FindObjectOfType<BossAreana>().transform;
+        BossSpawn();
     }
 
     private void Update()

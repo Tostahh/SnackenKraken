@@ -8,12 +8,17 @@ public class CamMotor : MonoBehaviour
     [SerializeField] private float boundx = 0.15f;
     [SerializeField] private float boundy = 0.05f;
 
+    private GameSystems gs;
+    private Camera Camera;
+
     private float Sx;
     private float Sy;
     private void Awake()
     {
         Sx = boundx;
         Sx = boundy;
+        gs = FindObjectOfType<GameSystems>();
+        Camera = GetComponent<Camera>();
     }
     private void OnEnable()
     {
@@ -64,6 +69,10 @@ public class CamMotor : MonoBehaviour
         transform.position = new Vector3(lookAt.position.x, lookAt.position.y, transform.position.z);
         boundx = 0.1f;
         boundy = 0.1f;
+        if(gs.BossNumb >= 2)
+        {
+            Camera.orthographicSize = 10;
+        }
     }
 
     private void ChangeTargetPlayer()
@@ -71,6 +80,10 @@ public class CamMotor : MonoBehaviour
         lookAt = FindObjectOfType<SeaCritterController>().transform;
         boundx = Sx;
         boundy = Sy;
+        if(Camera.orthographicSize != 5)
+        {
+            Camera.orthographicSize = 5;
+        }
     }
 
     private void ResetPos()
