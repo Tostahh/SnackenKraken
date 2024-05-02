@@ -352,7 +352,7 @@ MonoBehaviour:
   FiringPoint: {fileID: 4732367063376354289}
   CooldownDisplay: {fileID: 0}
   Fcooldown: 0.5
-  RSpeed: 300
+  RSpeed: 400
   Speed: 9
   BubbleSpeed: 12
   Ink: 0

@@ -24,7 +24,6 @@ public class SeaCritterController : MonoBehaviour
     [SerializeField] private Color SteathColor;
     [SerializeField] private bool LockedRotation;
 
-    private bool Bboost;
     private SpriteRenderer sr;
     private PlayerController PC;
     private GameSystems Us;
@@ -61,16 +60,12 @@ public class SeaCritterController : MonoBehaviour
 
     private void OnEnable()
     {
-        GameSystems.ActivateBoost += ABoost;
-        GameSystems.DeActivateBoost += CBoost;
         PC.Player.Shoot.performed += BlowBubbles;
         PC.Player.Spray.performed += SprayBubbles;
         PC.Player.Lock.performed += LockSpin;
     }
     private void OnDisable()
     {
-        GameSystems.ActivateBoost -= ABoost;
-        GameSystems.DeActivateBoost -= CBoost;
         PC.Player.Shoot.performed -= BlowBubbles;
         PC.Player.Spray.performed -= SprayBubbles;
         PC.Player.Lock.performed -= LockSpin;
@@ -151,7 +146,7 @@ public class SeaCritterController : MonoBehaviour
             if (Us.InkNumb > 0)
             {
                 Pas.Play();
-                Us.DecreaseSize();
+                Us.DecreaseInk();
 
                 Projectile bs;
                 bs = Instantiate(ProjectilePrefab, FiringPoint).GetComponent<Projectile>();
@@ -207,15 +202,9 @@ public class SeaCritterController : MonoBehaviour
     {
         StopAllCoroutines();
         Shot = false;
-    }
-
-    private void ABoost()
-    {
-        Bboost = true;
-    }
-    private void CBoost()
-    {
-        Bboost = false;
+        Power = false;
+        SPower = false;
+        Spraying = false;
     }
     public void SetSpecial(int I)
     {
@@ -260,7 +249,7 @@ public class SeaCritterController : MonoBehaviour
         {
             if (Us.InkNumb > 0)
             {
-                Us.DecreaseSize();
+                Us.DecreaseInk();
             }
         }
         x = x * 5;
@@ -292,7 +281,7 @@ public class SeaCritterController : MonoBehaviour
             {
                 if (Us.InkNumb > 0)
                 {
-                    Us.DecreaseSize();
+                    Us.DecreaseInk();
                 }
             }
 
@@ -321,7 +310,7 @@ public class SeaCritterController : MonoBehaviour
             {
                 if (Us.InkNumb > 0)
                 {
-                    Us.DecreaseSize();
+                    Us.DecreaseInk();
                 }
             }
 

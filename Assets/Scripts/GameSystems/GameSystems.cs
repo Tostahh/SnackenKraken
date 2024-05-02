@@ -9,8 +9,6 @@ using UnityEngine.InputSystem;
 
 public class GameSystems : GameAction
 {
-    public static Action ActivateBoost = delegate { };
-    public static Action DeActivateBoost = delegate { };
     public static Action EnterBoss = delegate { };
     public static Action ExitBoss = delegate { };
 
@@ -71,7 +69,7 @@ public class GameSystems : GameAction
     private void OnEnable()
     {
         DealDamageGA.DealDmg += DecreaseHeath;
-        GainBoostGA.GiveBoost += IncreaseSize;
+        GainBoostGA.GiveBoost += IncreaseInk;
         IncreaseScoreGA.IncreaseScore += IncreaseScore;
         Projectile.IncreasePointsHit += SmallIncreaseScore;
         IncreaseHeathGA.Heal += IncreaseHeath;
@@ -82,7 +80,7 @@ public class GameSystems : GameAction
     private void OnDisable()
     {
         DealDamageGA.DealDmg -= DecreaseHeath;
-        GainBoostGA.GiveBoost -= IncreaseSize;
+        GainBoostGA.GiveBoost -= IncreaseInk;
         IncreaseScoreGA.IncreaseScore -= IncreaseScore;
         Projectile.IncreasePointsHit -= SmallIncreaseScore;
         IncreaseHeathGA.Heal -= IncreaseHeath;
@@ -123,14 +121,6 @@ public class GameSystems : GameAction
             BossHeathBar.value = BossenemyHeath.Heath;
         }
 
-        if (InkSilder.value >= 10)
-        {
-            ActivateBoost();
-        }
-        else
-        {
-            DeActivateBoost();
-        }
         if(Sc.SpecailIndicator == 1)
         {
             PowerUpDisplay.sprite = PowerSprites[0];
@@ -149,12 +139,12 @@ public class GameSystems : GameAction
         }
     }
 
-    private void IncreaseSize()
+    private void IncreaseInk()
     {
         InkSilder.value++;
         InkNumb = InkSilder.value;
     }
-    public void DecreaseSize()
+    public void DecreaseInk()
     {
         InkSilder.value--;
         if(InkSilder.value<0)
@@ -174,8 +164,6 @@ public class GameSystems : GameAction
         ScoreNumb += 50;
         Score.text = ScoreNumb.ToString();
     }
-
-
     private void IncreaseHeath()
     {
         if(healthSlider.value++ != 11)
@@ -205,7 +193,6 @@ public class GameSystems : GameAction
         BossUI.SetActive(true);
         EnterBoss();
     }
-
     private void FinishBoss()
     {
         Animator.SetTrigger("Trans");
@@ -229,10 +216,15 @@ public class GameSystems : GameAction
             healthSlider.maxValue += 10;
             AnimatorB.SetTrigger("Crown3");
         }
+
         BossUI.SetActive(false);
         ExitBoss();
-    }
 
+        if (BossNumb >= 3 && !BVictory)
+        {
+            Victory();
+        }
+    }
     private void FakeFinishBoss()
     {
         BossState = false;
@@ -261,9 +253,9 @@ public class GameSystems : GameAction
         Time.timeScale = 0;
         Debug.Log("Dead");
     }
-
     private void Victory()
     {
+        BVictory = true;
         AsWin.Play();
         InPlay = false;
         if (!PlayerPrefs.HasKey("HighScore"))
@@ -283,14 +275,12 @@ public class GameSystems : GameAction
         VictoryScreen.SetActive(true);
         Time.timeScale = 0;
     }
-
     public void Continue()
     {
         InPlay = true;
         VictoryScreen.SetActive(false);
         Time.timeScale = 1;
     }
-
     public void StartGame()
     {
         InPlay = true;
@@ -316,7 +306,6 @@ public class GameSystems : GameAction
             Time.timeScale = 1;
         }
     }
-
     public void TryAgain()
     {
         if(Paused)
