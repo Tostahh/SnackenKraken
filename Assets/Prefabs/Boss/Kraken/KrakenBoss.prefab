@@ -221,8 +221,8 @@ MonoBehaviour:
   RSpeed: 300
   Runspeed: 5
   ProjectileSpeed: 10
-  ProjectilePrefab: {fileID: 8329488729536623274, guid: 90d1b63b7f1668b408be20f1796dea19, type: 3}
-  ProjectilePrefab1: {fileID: 4021769242470735015, guid: cd0cfdb20af8a4047b9b76cc5c66cce3, type: 3}
+  ProjectilePrefab: {fileID: 8329488729536623274, guid: 28fac5e015dcb0a42a86e9b9c47dfd3e, type: 3}
+  ProjectilePrefab1: {fileID: 4021769242470735015, guid: 7a8f60596e7e18c438ec683ffe0d6130, type: 3}
   FiringPoint: {fileID: 6558042291678593883}
   FiringPoint1: {fileID: 7604639381902707579}
   FiringPoint2: {fileID: 9064363001736862222}
